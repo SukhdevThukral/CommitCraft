@@ -2,6 +2,10 @@ Quit writing boring and useless commit messages - generate clean, meaningful com
 
 ![GitHub stars](https://img.shields.io/github/stars/yourusername/CommitCraft?style=social)
 ![Node.js](https://img.shields.io/badge/node-%3E%3D14-brightgreen)
+![Made with ❤️](https://img.shields.io/badge/made%20with-%E2%9D%A4-red)
+![Top Language](https://img.shields.io/github/languages/top/SukhdevThukral/CommitCraft)
+![Last Commit](https://img.shields.io/github/last-commit/SukhdevThukral/CommitCraft)
+
 
 
 ## Introduction
@@ -22,6 +26,10 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 - Lets you **accept or edit** the suggested message
 - Easy to install and run.
 
+
+## ⭐ Support CommitCraft :3
+
+If you liked this tool and wanna see more actual features to come like AI powered commits, please **give it a star!** Your support motivates me to keep improving it :D
 ## Installation
 
 1. Clone this repo
