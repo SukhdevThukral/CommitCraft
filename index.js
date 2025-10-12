@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 //shebang?? T-T
 const{execSync} = require("child_process");
-const readline = require("readline")
+const readline = require("readline");
+const chalk = require("chalk");
 
 // func to get access to staged files
 function getStagedFiles(){
@@ -13,7 +14,7 @@ function getStagedFiles(){
             return {status,file};
         });
     }catch(err) {
-        console.log("Error: make sure u have staged files bish.");
+        console.log(chalk.red("Error: make sure u have staged files bish."));
         process.exit(1)
     }
 }
@@ -21,12 +22,12 @@ function getStagedFiles(){
 // func to gen simple msgs (rule based for now we will soon add ai to ts)
 function genMessage(stagedFiles){
     const mesg = stagedFiles.map(f=>{
-        if (f.file.endsWith(".md")) return "docs: update " + f.file;
-        if (f.file.endsWith(".test.js")) return "test: update " + f.file;
-        if (f.status === 'A') return "feat: add " + f.file;
-        if (f.status === 'M') return "fix: update " + f.file;
-        if (f.status === 'D') return "chore: remove " + f.file;
-        return "chore: update" + f.file;
+        if (f.file.endsWith(".md")) return `📖 ${chalk.blue("docs:")} update ${f.file}`;
+        if (f.file.endsWith(".test.js")) return `🧪 ${chalk.magenta("test:")} update ${f.file}`;
+        if (f.status === 'A') return `🧪 ${chalk.green("feat:")} add ${f.file}`;
+        if (f.status === 'M')  return `🛠️ ${chalk.yellow("fix:")} update ${f.file}`;
+        if (f.status === 'D') return `🗑️ ${chalk.red("chore:")} remove ${f.file}`;
+        return `📦 ${chalk.cyan("chore:")} update ${f.file}`;
     })
     return mesg.join("\n");
 }
@@ -41,25 +42,30 @@ const rl = readline.createInterface({
 const stagedFiles = getStagedFiles();
 
 if (stagedFiles.length === 0) {
-    console.log("file not found");
+    console.log(chalk.red("file not found"));
     process.exit();
 }
 
+console.log(chalk.bold.cyan("\n 📂 Your Staged files:"));
+stagedFiles.forEach(f => {
+    console.log(chalk.gray(`   - ${f.status} ${f.file}`));
+});
+
 const suggestMsg = genMessage(stagedFiles);
 
-console.log("Suggested commit message:\n");
+console.log(chalk.bold.green("💡 Suggested commit message:\n"));
 console.log(suggestMsg + "\n");
 
-rl.question("Press enter to accept:\n", (answer)=> {
+rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
     const finalMessage = answer || suggestMsg;
-    console.log("\n Final commit msg:\n" + finalMessage);
+    console.log(chalk.bold.green("\n Final commit msg:\n") + finalMessage);
 
     // auto commit after accepting
     try{
-        execSync(`git commit -m "${finalMessage}"`, { state: "inherit"});
-        console.log("commit created!!")
+        execSync(`git commit -m "${finalMessage}"`, { stdio: "inherit"});
+        console.log(chalk.bold.green("commit created !!!"));
     }catch(err){
-        console.log("commit failed make sure to stage your changes!!")
+        console.log(chalk.red("commit failed make sure to stage your changes!!"));
     }
     rl.close();
 });
