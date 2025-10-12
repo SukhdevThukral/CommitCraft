@@ -1,6 +1,6 @@
 Quit writing boring and useless commit messages - generate clean, meaningful commits automatically
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/CommitCraft?style=social)
+![GitHub stars](https://img.shields.io/github/stars/SukhdevThukral/CommitCraft?style=social)
 ![Node.js](https://img.shields.io/badge/node-%3E%3D14-brightgreen)
 
 
