@@ -51,7 +51,7 @@ console.log(suggestMsg + "\n");
 rl.question("Press enter to accept:\n", (answer)=> {
     const finalMessage = answer || suggestMsg;
     console.log("\n Final commit msg:\n" + finalMessage);
-    
+
     // auto commit after accepting
     try{
         execSync(`git commit -m "${finalMessage}"`, { state: "inherit"});
@@ -61,3 +61,5 @@ rl.question("Press enter to accept:\n", (answer)=> {
     }
     rl.close();
 });
+
+// testing with my own repo ;(
