@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+//shebang?? T-T
 const{execSync} = require("child_process");
 const readline = require("readline")
 
