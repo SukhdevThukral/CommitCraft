@@ -1,6 +1,7 @@
 const{execSync} = require("child_process");
 const readline = require("readline")
 
+// func to get access to staged files
 function getStagedFiles(){
     try{
         const output = execSync("git diff --staged --name-status").toString();
@@ -50,5 +51,13 @@ console.log(suggestMsg + "\n");
 rl.question("Press enter to accept:\n", (answer)=> {
     const finalMessage = answer || suggestMsg;
     console.log("\n Final commit msg:\n" + finalMessage);
+    
+    // auto commit after accepting
+    try{
+        execSync(`git commit -m "${finalMessage}"`, { state: "inherit"});
+        console.log("commit created!!")
+    }catch(err){
+        console.log("commit failed make sure to stage your changes!!")
+    }
     rl.close();
-})
+});
