@@ -2,11 +2,20 @@
   "name": "commitcraft",
   "version": "1.0.0",
   "main": "index.js",
+  "despcription": "tool tht suggests and generates better git commit messages",
+  "bin": {
+    "commitcraft":"index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "keywords": [
+    "git",
+    "commit",
+    "automation",
+    "cli",
+    "developer-tools"
+  ],
+  "author": "Sukhdev Thukral",
+  "license": "MIT"
 }
