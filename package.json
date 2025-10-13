@@ -1,6 +1,7 @@
 {
   "name": "commitcraft",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "despcription": "tool tht suggests and generates better git commit messages",
   "bin": {

@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 //shebang?? T-T
-const{execSync} = require("child_process");
-const readline = require("readline");
-const chalk = require("chalk");
-
+import { execSync } from "child_process";
+import readline from "readline";
+import chalk from "chalk";
 // func to get access to staged files
 function getStagedFiles(){
     try{
@@ -46,7 +45,7 @@ if (stagedFiles.length === 0) {
     process.exit();
 }
 
-console.log(chalk.bold.cyan("\n 📂 Your Staged files:"));
+console.log(chalk.cyan.bold("\n 📂 Your Staged files:"));
 stagedFiles.forEach(f => {
     console.log(chalk.gray(`   - ${f.status} ${f.file}`));
 });
@@ -63,7 +62,7 @@ rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
     // auto commit after accepting
     try{
         execSync(`git commit -m "${finalMessage}"`, { stdio: "inherit"});
-        console.log(chalk.bold.green("commit created !!!"));
+        console.log(chalk.green(chalk.bold("commit created !!!")));
     }catch(err){
         console.log(chalk.red("commit failed make sure to stage your changes!!"));
     }
