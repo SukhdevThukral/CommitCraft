@@ -67,5 +67,4 @@ node index.js
 ## Roadmap
 - [ ] Add AI-powered commit suggestions
 - [ ] Git hook integration for automatic suggestions
-- [ ] Direct git commits
 - [ ] Configurable commit styles
