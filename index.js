@@ -3,6 +3,9 @@
 import { execSync } from "child_process";
 import readline from "readline";
 import chalk from "chalk";
+import ora from "ora";
+import boxen from "boxen";
+
 // func to get access to staged files
 function getStagedFiles(){
     try{
@@ -31,6 +34,37 @@ function genMessage(stagedFiles){
     return mesg.join("\n");
 }
 
+//ora spinner cool shit
+const spin = ora("Analysing staged files.....").start();
+const stagedFiles = getStagedFiles();
+spin.succeed('Staged files analyzed!')
+
+
+if (stagedFiles.length === 0) {
+    console.log(chalk.red("file not found"));
+    spin.fail("No staged files found.");
+    process.exit(1);
+    
+}
+const fileList = stagedFiles.map(f => chalk.gray(`   - ${f.status} ${f.file}`)).join("\n");
+console.log(boxen(fileList, {
+    padding: 1,
+    margin: 1,
+    title: "📂 Your Staged Files",
+    titleAlignment: "center",
+    borderColor: "cyan"
+}));
+
+
+const suggestMsg = genMessage(stagedFiles).replace(/\n/g, "; ");
+
+console.log(boxen(suggestMsg, {
+    padding: 1,
+    margin: 1,
+    title: "💡 Suggested Commits messages",
+    titleAlignment: "center",
+    borderColor: "green"
+}));
 
 //interface for cli
 const rl = readline.createInterface({
@@ -38,26 +72,16 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-const stagedFiles = getStagedFiles();
-
-if (stagedFiles.length === 0) {
-    console.log(chalk.red("file not found"));
-    process.exit();
-}
-
-console.log(chalk.cyan.bold("\n 📂 Your Staged files:"));
-stagedFiles.forEach(f => {
-    console.log(chalk.gray(`   - ${f.status} ${f.file}`));
-});
-
-const suggestMsg = genMessage(stagedFiles);
-
-console.log(chalk.bold.green("💡 Suggested commit message:\n"));
-console.log(suggestMsg + "\n");
-
 rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
     const finalMessage = answer || suggestMsg;
-    console.log(chalk.bold.green("\n Final commit msg:\n") + finalMessage);
+    console.log(boxen(finalMessage, {
+            padding: 1,
+            margin: 1,
+            title: "✅ Final Commit Message",
+            borderColor: "yellow",
+            titleAlignment: "center",
+        })
+    );
 
     // auto commit after accepting
     try{
