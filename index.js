@@ -56,7 +56,7 @@ console.log(boxen(fileList, {
 }));
 
 
-const suggestMsg = genMessage(stagedFiles).replace(/\n/g, "; ");
+const suggestMsg = genMessage(stagedFiles);
 
 console.log(boxen(suggestMsg, {
     padding: 1,
@@ -85,7 +85,7 @@ rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
 
     // auto commit after accepting
     try{
-        execSync(`git commit -m "${finalMessage}"`, { stdio: "inherit"});
+        execSync(`git commit -m "${finalMessage.replace(/\n/g, '" -m "')}"`, { stdio: "inherit"});
         console.log(chalk.green(chalk.bold("commit created !!!")));
     }catch(err){
         console.log(chalk.red("commit failed make sure to stage your changes!!"));
