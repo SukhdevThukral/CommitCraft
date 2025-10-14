@@ -4,6 +4,7 @@ import { execSync } from "child_process";
 import readline from "readline";
 import chalk from "chalk";
 import ora from "ora";
+import stripAnsi from 'strip-ansi'; // will remove all the ansi codes tht persist in my commit msgs rn
 import boxen from "boxen";
 
 // func to get access to staged files
@@ -73,7 +74,7 @@ const rl = readline.createInterface({
 });
 
 rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
-    const finalMessage = answer || suggestMsg;
+    const finalMessage = stripAnsi(answer || suggestMsg);
     console.log(boxen(finalMessage, {
             padding: 1,
             margin: 1,
@@ -95,3 +96,5 @@ rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
 
 // testing with my own repo ;(
 //testing 2 :(
+//test 3
+//test 4
