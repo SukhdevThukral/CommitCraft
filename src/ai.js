@@ -20,7 +20,7 @@ export async function genAIMessage(diff){
         model: "gpt-4o-mini",
         messages: [{
             role: "user",
-            //shit arch, had to ai gen cause i gave up fuckass ai gave up too
+            //shit arch, had to ai gen cause i gave up fuckass ai gave up too sheesh testing testing
         content: `
 You are a professional software engineer.
 
