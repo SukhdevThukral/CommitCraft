@@ -22,8 +22,11 @@ export function getStagedFiles(){
 
 // to get diff code
 
-export function getDiff(){
+export function getDiff(file){
     try{
+        if (file){
+            return execSync(`git diff --staged -- ${file}`).toString();
+        }
         return execSync("git diff --staged").toString();
     } catch (err) {
         return "";

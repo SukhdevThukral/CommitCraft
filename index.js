@@ -48,7 +48,7 @@ if (useAI) {
         const fileDiff = getDiff(file.file);
 
         //callin AI for this file's diff
-        const msg = await genAIMessage(file.file, fileDiff);
+        const msg = await genAIMessage(fileDiff);
         messages.push(msg);
     }
     //combinin all ai suggestion for all files
