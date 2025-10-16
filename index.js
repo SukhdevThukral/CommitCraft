@@ -27,12 +27,12 @@ spin.succeed('Staged files analyzed!')
 if (stagedFiles.length === 0) {
     console.log(chalk.red("file not found"));
     process.exit(1);
-    
 }
 
 showFileBox(stagedFiles);
 
-//interface for cli
+
+//this is supposed to be interface for my cli
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
