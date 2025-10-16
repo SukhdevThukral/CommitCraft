@@ -1,15 +1,23 @@
 #!/usr/bin/env node
 //shebang?? T-T
 
-import { getStagedFiles, getDiff } from "./src/git";
-import { genMessage } from "./src/messages";
-import { showFileBox } from "./src/ui";
-import { showMsgBox } from "./src/ui";
-import { finalBox } from "./src/ui";
-import { spinner } from "./src/ui";
+import { getStagedFiles, getDiff } from "./src/git.js";
+import { genMessage } from "./src/messages.js";
+import { showFileBox } from "./src/ui.js";
+import { showMsgBox } from "./src/ui.js";
+import { finalBox } from "./src/ui.js";
+import { spinner } from "./src/ui.js";
 import { execSync } from "child_process";
+import chalk from "chalk";
 import readline from "readline";
+import { genAIMessage } from "./src/ai.js";
 import stripAnsi from 'strip-ansi'; // will remove all the ansi codes tht persist in my commit msgs rn
+
+
+//take cli args
+const args = process.argv.slice(2);
+const useAI = args.includes("--ai"); //ai flag
+
 //ora spinner cool shit
 const spin = spinner("Analysing staged files.....").start();
 const stagedFiles = getStagedFiles();
@@ -30,13 +38,25 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+const diff = getDiff();
+
+let suggestMsg;
+if (useAI) {
+    //async cal to AI
+    suggestMsg = await genAIMessage(diff);
+}else{
+    suggestMsg = genMessage(stagedFiles);
+}
+
+showMsgBox(suggestMsg);
+
 rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
     const finalMessage = stripAnsi(answer || suggestMsg);
     finalBox(finalMessage);
 
     // auto commit after accepting
     try{
-        execSync(`git commit -F -`,{input: finalMessage,  stdio: "inherit"});
+        execSync(`git commit -F -`,{input: finalMessage,  stdio: "pipe"});
         console.log(chalk.green(chalk.bold("commit created !!!")));
     }catch(err){
         console.log(chalk.red("commit failed make sure to stage your changes!!"));
