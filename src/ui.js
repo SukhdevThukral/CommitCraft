@@ -25,7 +25,7 @@ export function showMsgBox(msg){
 }
 
 export function finalBox(msg){
-console.log(boxen(finalMessage, {
+console.log(boxen(msg, {
             padding: 1,
             margin: 1,
             title: "✅ Final Commit Message",

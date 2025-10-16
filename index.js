@@ -1,67 +1,72 @@
 #!/usr/bin/env node
-//shebang?? T-T
-
+import 'dotenv/config'; // load env vars first
 import { getStagedFiles, getDiff } from "./src/git.js";
 import { genMessage } from "./src/messages.js";
-import { showFileBox } from "./src/ui.js";
-import { showMsgBox } from "./src/ui.js";
-import { finalBox } from "./src/ui.js";
-import { spinner } from "./src/ui.js";
+import { showFileBox, showMsgBox, finalBox, spinner } from "./src/ui.js";
 import { execSync } from "child_process";
 import chalk from "chalk";
 import readline from "readline";
 import { genAIMessage } from "./src/ai.js";
-import stripAnsi from 'strip-ansi'; // will remove all the ansi codes tht persist in my commit msgs rn
+import stripAnsi from "strip-ansi";
 
-
-//take cli args
+// CLI args
 const args = process.argv.slice(2);
-const useAI = args.includes("--ai"); //ai flag
+const useAI = args.includes("--ai");
 
-//ora spinner cool shit
-const spin = spinner("Analysing staged files.....").start();
+// Spinner
+const spin = spinner("Analyzing staged files...").start();
 const stagedFiles = getStagedFiles();
-spin.succeed('Staged files analyzed!')
-
+spin.succeed("Staged files analyzed!");
 
 if (stagedFiles.length === 0) {
-    console.log(chalk.red("file not found"));
+    console.log(chalk.red("❌ No staged files found."));
     process.exit(1);
-    
 }
 
 showFileBox(stagedFiles);
 
-//interface for cli
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-const diff = getDiff();
-
-let suggestMsg;
 if (useAI) {
-    //async cal to AI
-    suggestMsg = await genAIMessage(diff);
-}else{
-    suggestMsg = genMessage(stagedFiles);
-}
+    // AI-powered per-file commits
+    for (const file of stagedFiles) {
+        try {
+            const fileDiff = getDiff(file.file);
+            const msg = await genAIMessage(file.file, fileDiff);
+            const cleanMsg = stripAnsi(msg.trim());
 
-showMsgBox(suggestMsg);
+            execSync(`git add ${file.file}`);
+            execSync(`git commit -m "${cleanMsg}"`, { stdio: "inherit" });
 
-rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
-    const finalMessage = stripAnsi(answer || suggestMsg);
-    finalBox(finalMessage);
-
-    // auto commit after accepting
-    try{
-        execSync(`git commit -F -`,{input: finalMessage,  stdio: "pipe"});
-        console.log(chalk.green(chalk.bold("commit created !!!")));
-    }catch(err){
-        console.log(chalk.red("commit failed make sure to stage your changes!!"));
+            console.log(chalk.green(`✅ Committed ${file.file}`));
+        } catch (err) {
+            console.log(chalk.red(`❌ Failed to commit ${file.file}: ${err.message}`));
+        }
     }
-    rl.close();
-});
 
-// testing with my own repo ;(
+    // Exit after all commits
+    process.exit(0);
+} else {
+    // Fallback: single commit for all staged files
+    const suggestMsg = genMessage(stagedFiles);
+    const finalMsg = stripAnsi(suggestMsg);
+
+    showMsgBox(finalMsg);
+
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer) => {
+        const finalMessage = stripAnsi(answer || finalMsg);
+        finalBox(finalMessage);
+
+        try {
+            execSync(`git commit -F -`, { input: finalMessage, stdio: "pipe" });
+            console.log(chalk.green("✅ Commit created!"));
+        } catch (err) {
+            console.log(chalk.red("❌ Commit failed: make sure files are staged!"));
+        }
+
+        rl.close();
+    });
+}
