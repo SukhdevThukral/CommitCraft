@@ -11,6 +11,7 @@ import { execSync } from "child_process";
 import chalk from "chalk";
 import readline from "readline";
 import { genAIMessage } from "./src/ai.js";
+import { multiCommit } from "./src/gitActions.js";
 import stripAnsi from 'strip-ansi'; // will remove all the ansi codes tht persist in my commit msgs rn
 
 
@@ -63,13 +64,34 @@ rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
     const finalMessage = stripAnsi(answer || suggestMsg);
     finalBox(finalMessage);
 
-    // auto commit after accepting
-    try{
-        execSync(`git commit -F -`,{input: finalMessage,  stdio: "pipe"});
-        console.log(chalk.green(chalk.bold("commit created !!!")));
-    }catch(err){
-        console.log(chalk.red("commit failed make sure to stage your changes!!"));
+    if (!finalMessage.trim()){
+        console.log(chalk.red("No commit message generated."));
+        rl.close();
+        process.exit(1)
     }
+
+    try{
+        const hasMultipleCommits = (finalMessage.match(/\n{2,}(?=\w+:\s)/g) || []).length>0;
+
+        if (hasMultipleCommits){
+            console.log(chalk.green("Detected multiple commits, splitting automatically..."));
+            multiCommit(finalMessage);
+        }
+        
+        else{
+            console.log(chalk.green("Committing single combined message..."));
+            execSync(`git commit -F -`, { input: finalMessage, stdio: "pipe" });
+        }
+
+        console.log(chalk.bold.green("\n✅ Commit(s) created successfully!"));
+    } catch(err){
+        console.log(chalk.red("Commit failed, make sure to stage your changes!"));
+    }
+    //     execSync(`git commit -F -`,{input: finalMessage,  stdio: "pipe"});
+    //     console.log(chalk.green(chalk.bold("commit created !!!")));
+    // }catch(err){
+    //     console.log(chalk.red("commit failed make sure to stage your changes!!"));
+    // }
     rl.close();
 });
 
