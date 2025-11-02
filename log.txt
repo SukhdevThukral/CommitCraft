@@ -2,3 +2,4 @@ i made 21b17bf first and then made changes to make it to e3f7137. but the e3f713
 altho didnt work quite so i js had to undo every change returning to the working but unclean version and then i made the commit "21b17bf". (IM SORRY)
 
 217be44 was a commit blunder btw
+7085c30 was a also a commit blunder
