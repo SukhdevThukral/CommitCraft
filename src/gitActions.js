@@ -9,13 +9,13 @@ export function multiCommit(aiOutput) {
     let stagedFiles;
     try{
 
-        stagedFiles = execSync("git diff --cachede --name-only").toString().trim().split("\n").filter(Boolean)
+        stagedFiles = execSync("git diff --cached --name-only").toString().trim().split("\n").filter(Boolean)
 
     } catch(err){
         console.log(chalk.red("Failed to retrieve files."));
         return;
     }
-
+    //test 2
     if (sections.length === 0 || stagedFiles.length === 0){
         console.log(chalk.red("No commit msgs or staged files found."));
         return;
