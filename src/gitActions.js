@@ -6,16 +6,20 @@ export function multiCommit(aiOutput) {
 
     const sections = aiOutput.split(/\n{2,}(?=\w+:\s)/g).map(s=>s.trim()).filter(Boolean);
 
+    let stagedFiles;
     try{
-        // re-adding of all the files to ensure each section has content for a valid commit.
-        execSync("git add -A");
-        console.log(chalk.green("All files staged once.\n"));
+
+        stagedFiles = execSync("git diff --cachede --name-only").toString().trim().split("\n").filter(Boolean)
 
     } catch(err){
-        console.log(chalk.red("Failed to stage files."));
+        console.log(chalk.red("Failed to retrieve files."));
         return;
     }
 
+    if (sections.length === 0 || stagedFiles.length === 0){
+        console.log(chalk.red("No commit msgs or staged files found."));
+        return;
+    }
     for (const section of sections) {
         const [titleLine, ...bodyLines] = section.split("\n").map(line => line.trim());
         const message = `${titleLine}\n\n${bodyLines.join("\n")}`;
