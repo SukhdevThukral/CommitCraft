@@ -3,18 +3,17 @@ import chalk from "chalk";
 
 //shoutout to big boy ravi 
 export function multiCommit(aiOutput) {
-
     const sections = aiOutput.split(/\n{2,}(?=\w+:\s)/g).map(s=>s.trim()).filter(Boolean);
-
     let stagedFiles;
+
     try{
-
         stagedFiles = execSync("git diff --cached --name-only").toString().trim().split("\n").filter(Boolean)
-
-    } catch(err){
+    } 
+    catch(err){
         console.log(chalk.red("Failed to retrieve files."));
         return;
     }
+
     //test 2
     if (sections.length === 0 || stagedFiles.length === 0){
         console.log(chalk.red("No commit msgs or staged files found."));
@@ -30,7 +29,7 @@ export function multiCommit(aiOutput) {
         const fileToCommit = stagedFiles[i];
         const section = sections[i];
 
-        const [titleLine, ...bodyLines] = section.split("\n").map(line=> line.trim());
+        const [titleLine, ...bodyLines] = section.split("\n");
         const msg = `${titleLine}\n\n${bodyLines.join("\n")}`;
 
         console.log(chalk.cyan(`\n Commiting [${fileToCommit}]: ${titleLine}`));
