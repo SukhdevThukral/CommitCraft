@@ -1,4 +1,4 @@
-import {execSync} from "child_process";
+import {exec, execSync} from "child_process";
 import chalk from "chalk";
 
 //shoutout to big boy ravi 
@@ -33,15 +33,22 @@ export function multiCommit(aiOutput) {
         const [titleLine, ...bodyLines] = section.split("\n").map(line=> line.trim());
         const msg = `${titleLine}\n\n${bodyLines.join("\n")}`;
 
-        console.log(chalk.cyan(`/n Commiting [${fileToCommit}]: ${titleLine}`));
+        console.log(chalk.cyan(`\n Commiting [${fileToCommit}]: ${titleLine}`));
 
         try{
-            execSync(`git commit -m "${msg.replace(/"/g, '\\"')}" -- "${fileToCommit}"`,{
-                stdio: "inherit",
-            });
-        } catch(err) {
-            console.log(chalk.red(`Commit failed for file ${fileToCommit}\n`), message);
-        }
+            //temp unstaging and then restaging one by one
+            execSync(`git restore --staged .`);
+            execSync(`git add "${fileToCommit}"`);
+            execSync(`git commit -m "${msg.replace(/"/g, '\\"')}" -- "${fileToCommit}"`, {stdio: "inherit",});
+
+            const remainingFiles = stagedFiles.slice(i + 1);
+            if (remainingFiles.length > 0){
+                for (const f of remainingFiles){
+                    execSync(`git add "${f}"`);
+                }
+            }
+    }catch(err){
+      console.log(chalk.red(`commit failed for file ${fileToCommit}\n`), msg);
     }
     //if extra files exist but no mor msgs, commit together
     if (stagedFiles.length > commitCount){
@@ -57,4 +64,4 @@ export function multiCommit(aiOutput) {
         }
     }
     console.log(chalk.green.bold("\nAll commits completed successfully!"));
-}
+}}
