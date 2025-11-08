@@ -20,26 +20,41 @@ export function multiCommit(aiOutput) {
         console.log(chalk.red("No commit msgs or staged files found."));
         return;
     }
-    for (const section of sections) {
-        const [titleLine, ...bodyLines] = section.split("\n").map(line => line.trim());
-        const message = `${titleLine}\n\n${bodyLines.join("\n")}`;
-        
-        console.log(chalk.cyan(`\n Committing: ${titleLine}`));
+
+    console.log(chalk.green(`\n staged ${stagedFiles.length} files.`));
+    console.log(chalk.green(`found ${sections.length} commit messages.`));
+
+    const commitCount = Math.min(stagedFiles.length, sections.length);
+
+    for (let i=0; i< commitCount; i++){
+        const fileToCommit = stagedFiles[i];
+        const section = sections[i];
+
+        const [titleLine, ...bodyLines] = section.split("\n").map(line=> line.trim());
+        const msg = `${titleLine}\n\n${bodyLines.join("\n")}`;
+
+        console.log(chalk.cyan(`/n Commiting [${fileToCommit}]: ${titleLine}`));
 
         try{
-            // findin changed files in staging area
-            const changedFiles = execSync("git diff --cached --name-only").toString().trim().split("\n").filter(Boolean);
-            if (changedFiles.length === 0){
-                console.log(chalk.yellow("No more staged files left to commit."));
-                break;
-            }
-
-            // commit one file/section
-            const fileToCommit = changedFiles[0];
-            execSync(`git commit -m "${message.replace(/"/g, '\\"')}" -- "${fileToCommit}"`, { stdio: "inherit" });
-        } 
-        catch(err){
-            console.log(chalk.red("Commit failed for section:\n"), message);
+            execSync(`git commit -m "${msg.replace(/"/g, '\\"')}" -- "${fileToCommit}"`,{
+                stdio: "inherit",
+            });
+        } catch(err) {
+            console.log(chalk.red(`Commit failed for file ${fileToCommit}\n`), message);
         }
     }
+    //if extra files exist but no mor msgs, commit together
+    if (stagedFiles.length > commitCount){
+        const remainingFiles = stagedFiles.slice(commitCount);
+        console.log(chalk.yellow(`\n ${remainingFiles.length} extra files - commiting together.`));
+        try{
+            execSync(`git commit -m "chore:auto-commit remaining files" -- ${remainingFiles.map(f=> `"${f}"`)
+        .join(" ")}`, {stdio:"inherit"});
+
+        }
+        catch(err){
+            console.log(chalk.red("Failed to commit remaining files."));
+        }
+    }
+    console.log(chalk.green.bold("\nAll commits completed successfully!"));
 }
