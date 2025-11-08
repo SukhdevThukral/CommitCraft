@@ -4,7 +4,7 @@ export async function genAIMessage(diff){
      if (!diff || !diff.trim()) {
         return "chore: update files";
     }
-    //test4
+    //test5
 
     if (!OPENROUTER_API_KEY) {
         throw new Error("missing api key in env variables.");
