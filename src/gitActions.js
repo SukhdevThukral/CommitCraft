@@ -34,21 +34,12 @@ export function multiCommit(aiOutput) {
 
         console.log(chalk.cyan(`\n Commiting [${fileToCommit}]: ${titleLine}`));
 
-        try{
-            //temp unstaging and then restaging one by one
-            execSync(`git restore --staged .`);
-            execSync(`git add "${fileToCommit}"`);
-            execSync(`git commit -m "${msg.replace(/"/g, '\\"')}" -- "${fileToCommit}"`, {stdio: "inherit",});
-
-            const remainingFiles = stagedFiles.slice(i + 1);
-            if (remainingFiles.length > 0){
-                for (const f of remainingFiles){
-                    execSync(`git add "${f}"`);
-                }
-            }
-    }catch(err){
-      console.log(chalk.red(`commit failed for file ${fileToCommit}\n`), msg);
-    }
+        try {
+            // commiting only this file, no unstaging
+            execSync(`git commit -m "${msg.replace(/"/g, '\\"')}" -- "${fileToCommit}"`, { stdio: "inherit" });
+        } catch (err) {
+            console.log(chalk.red(`❌ Commit failed for file ${fileToCommit}\n`), msg);
+        }
     //if extra files exist but no mor msgs, commit together
     if (stagedFiles.length > commitCount){
         const remainingFiles = stagedFiles.slice(commitCount);
