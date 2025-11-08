@@ -39,8 +39,10 @@ export function multiCommit(aiOutput) {
             execSync(`git restore --staged .`);
             execSync(`git add "${fileToCommit}"`);
             
-            const escapedMsg = msg.replace(/(["$`\\])/g,'\\$1').replace(/\n/g, '\\n');
-            execSync(`git commit -m "${escapedMsg}" -- "${fileToCommit}"`, { stdio: "inherit" });
+            const safeMsg = msg.replace(/(["\\$`])/g, '\\$1');
+
+            execSync(`git commit -m "${safeMsg}" -- "${fileToCommit}"`, { stdio: "inherit" });
+
 
 
             const remainingFiles = stagedFiles.slice(i + 1);
