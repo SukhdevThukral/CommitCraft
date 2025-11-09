@@ -1,3 +1,7 @@
+# CommitCraft - AI commit generator
+
+![Demo](demo.gif)
+
 Quit writing boring and useless commit messages - generate clean, meaningful commits automatically
 
 ![GitHub stars](https://img.shields.io/github/stars/SukhdevThukral/CommitCraft?style=social)
