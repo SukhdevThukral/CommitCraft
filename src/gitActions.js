@@ -40,7 +40,7 @@ export function multiCommit(aiOutput) {
             
             execSync(`git commit --file - -- "${fileToCommit}"`, {
                 input: msg,
-                stdio: ["pipe", "inherit", "inherit"], // pipe stdin, inherit stdout/stderr
+                stdio: ["pipe", "inherit", "inherit"],
             });
 
 
