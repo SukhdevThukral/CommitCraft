@@ -14,7 +14,6 @@ export function multiCommit(aiOutput) {
         return;
     }
 
-    //test 2
     if (sections.length === 0 || stagedFiles.length === 0){
         console.log(chalk.red("No commit msgs or staged files found."));
         return;
