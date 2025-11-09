@@ -1,0 +1,296 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: powershell.exe
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: F:\.Documents\gloup\CommitCraft
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 238
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 26
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 1656
+    content: "\e[?9001h\e[?1004h"
+  - delay: 189
+    content: "\e[?25l\e[2J\e[m\e[HWindows PowerShell\r\nCopyright (C) Microsoft Corporation. All rights reserved.\e[4;1HInstall the latest PowerShell for new features and improvements! https://aka.ms/PSWindows\e]0;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\a\e[?25h"
+  - delay: 22
+    content: "\e[?25l\e[6;1H\e[?25h"
+  - delay: 230
+    content: 'PS F:\.Documents\gloup\CommitCraft> '
+  - delay: 1445
+    content: "\e[?25l"
+  - delay: 21
+    content: "\e[93mg\e[?25h"
+  - delay: 18
+    content: "\e[m\e[?25l"
+  - delay: 14
+    content: "\e[93m\bgi\e[?25h"
+  - delay: 90
+    content: "\e[m\e[?25l"
+  - delay: 19
+    content: "\e[93m\e[6;37Hgit\e[?25h"
+  - delay: 327
+    content: "\e[m\e[?25l"
+  - delay: 17
+    content: "\e[93m\e[6;37Hgit \e[?25h"
+  - delay: 117
+    content: "\e[m\e[?25l"
+  - delay: 9
+    content: "\e[93m\e[6;37Hgit \e[37ma\e[?25h"
+  - delay: 152
+    content: "\e[m\e[?25l"
+  - delay: 20
+    content: "\e[93m\e[6;37Hgit \e[37mad\e[?25h"
+  - delay: 131
+    content: "\e[m\e[?25l"
+  - delay: 11
+    content: "\e[93m\e[6;37Hgit \e[37madd\e[?25h"
+  - delay: 190
+    content: "\e[m\e[?25l"
+  - delay: 13
+    content: "\e[93m\e[6;37Hgit \e[37madd \e[?25h"
+  - delay: 130
+    content: "\e[m\e[?25l"
+  - delay: 11
+    content: "\e[93m\e[6;37Hgit \e[37madd .\e[?25h"
+  - delay: 415
+    content: "\e[m"
+  - delay: 11
+    content: "\r\n"
+  - delay: 177
+    content: 'PS F:\.Documents\gloup\CommitCraft> '
+  - delay: 1178
+    content: "\e[?25l"
+  - delay: 23
+    content: "\e[93mc\e[?25h"
+  - delay: 103
+    content: "\e[m\e[?25l"
+  - delay: 22
+    content: "\e[93m\bco\e[?25h"
+  - delay: 186
+    content: "\e[m\e[?25l"
+  - delay: 17
+    content: "\e[93m\e[7;37Hcom\e[?25h"
+  - delay: 120
+    content: "\e[m\e[?25l"
+  - delay: 19
+    content: "\e[93m\e[7;37Hcomm\e[?25h"
+  - delay: 127
+    content: "\e[m\e[?25l"
+  - delay: 14
+    content: "\e[93m\e[7;37Hcommi\e[?25h"
+  - delay: 70
+    content: "\e[m\e[?25l"
+  - delay: 24
+    content: "\e[93m\e[7;37Hcommit\e[?25h"
+  - delay: 490
+    content: "\e[m\e[?25l"
+  - delay: 15
+    content: "\e[93m\e[7;37Hcommitc\e[?25h"
+  - delay: 201
+    content: "\e[m\e[?25l"
+  - delay: 17
+    content: "\e[93m\e[7;37Hcommitcr\e[?25h"
+  - delay: 49
+    content: "\e[m\e[?25l"
+  - delay: 14
+    content: "\e[93m\e[7;37Hcommitcra\e[?25h"
+  - delay: 160
+    content: "\e[m\e[?25l"
+  - delay: 12
+    content: "\e[93m\e[7;37Hcommitcraf\e[?25h"
+  - delay: 188
+    content: "\e[m\e[?25l"
+  - delay: 17
+    content: "\e[93m\e[7;37Hcommitcraft\e[?25h"
+  - delay: 312
+    content: "\e[m\e[?25l"
+  - delay: 17
+    content: "\e[93m\e[7;37Hcommitcraft \e[?25h"
+  - delay: 247
+    content: "\e[m\e[?25l"
+  - delay: 18
+    content: "\e[93m\e[7;37Hcommitcraft \e[37m-\e[?25h"
+  - delay: 94
+    content: "\e[m\e[?25l"
+  - delay: 14
+    content: "\e[93m\e[7;37Hcommitcraft \e[90m--\e[?25h"
+  - delay: 129
+    content: "\e[m\e[?25l"
+  - delay: 12
+    content: "\e[93m\e[7;37Hcommitcraft \e[90m--a\e[?25h"
+  - delay: 396
+    content: "\e[m\e[?25l"
+  - delay: 22
+    content: "\e[93m\e[7;37Hcommitcraft \e[90m--ai\e[?25h"
+  - delay: 508
+    content: "\e[m"
+  - delay: 18
+    content: "\r\n"
+  - delay: 704
+    content: "\e[?25l"
+  - delay: 23
+    content: "\e[36m⠋ \e[mAnalysing staged files....."
+  - delay: 142
+    content: "\e[32m\r✔ \e[mStaged files analyzed!\e[K\e[36m\e[10;1H   ┌─ \U0001F4C2 Your Staged Files ──┐\e[m\r\n   \e[36m│                         │\e[m\r\n   \e[36m│      \e[90m- M bin/setup.js   \e[36m│\e[m\r\n   \e[36m│      \e[90m- M src/ai.js      \e[36m│\e[m\r\n   \e[36m│      \e[90m- M src/git.js     \e[36m│\e[m\r\n   \e[36m│                         │\r\n   └─────────────────────────┘\e[18;1H\e[?25h"
+  - delay: 5497
+    content: "\e[m\e[32m\r\n   ┌────────────────── \U0001F4A1 Suggested Commits messages ───────────────────┐\e[m\r\n   \e[32m│                                                                    │\e[m\r\n   \e[32m│   \e[mchore: add a blank line for better readability in setup.js       \e[32m│\e[m\r\n   \e[32m│                                                                    │\e[m\r\n   \e[32m│   \e[m- Inserted a blank line after the readline interface creation.   \e[32m│\e[m\r\n   \e[32m│                                                                    │\e[m\r\n   \e[32m│   \e[mfix: remove unnecessary newline in genAIMessage function\e[9X\e[32m\e[9C│\e[m\r\n   \e[32m│                                                                    │\r\e[m\n   \e[32m│   \e[m- Cleaned up formatting for better readability in src/ai.js.     \e[32m│\e[K\r\e[m\n   \e[32m│                                                                    │\e[K\r\e[m\n   \e[32m│   \e[mfix: remove unnecessary blank line in git.js file\e[16X\e[32m\e[16C│\e[K\r\e[m\n   \e[32m│                                                                    │\e[K\r\e[m\n   \e[32m│   \e[m- Cleaned up code for better readability\e[25X\e[32m\e[25C│\e[K\r\e[m\n   \e[32m│   \e[m- No functional changes made\e[37X\e[32m\e[37C│\e[K\r\e[m\n   \e[32m│                                                                    │\e[K\r\e[m\n\e[32m   └────────────────────────────────────────────────────────────────────┘\r\e[m\n\n"
+  - delay: 22
+    content: "\e[33m⌨️ Press enter to accept:\e[K\r"
+  - delay: 6
+    content: "\e[m\n"
+  - delay: 6597
+    content: |+
+
+  - delay: 15
+    content: "\n\e[33m   ┌───────────────────── ✅ Final Commit Message ──────────────────────┐\r\e[m\n   \e[33m│                                                                    │\e[K\r\e[m\n   \e[33m│   \e[mchore: add a blank line for better readability in setup.js       \e[33m│\e[K\r\e[m\n   \e[33m│                                                                    │\e[K\r\e[m\n   \e[33m│   \e[m- Inserted a blank line after the readline interface creation.   \e[33m│\e[K\r\e[m\n   \e[33m│                                                                    │\e[K\r\e[m\n   \e[33m│   \e[mfix: remove unnecessary newline in genAIMessage function\e[9X\e[33m\e[9C│\e[K\r\e[m\n   \e[33m│                                                                    │\e[K\r\e[m\n   \e[33m│   \e[m- Cleaned up formatting for better readability in src/ai.js.     \e[33m│\e[K\r\e[m\n   \e[33m│                                                                    │\e[K\r\e[m\n   \e[33m│   \e[mfix: remove unnecessary blank line in git.js file\e[16X\e[33m\e[16C│\e[K\r\e[m\n   \e[33m│                                                                    │\e[K\r\e[m\n   \e[33m│   \e[m- Cleaned up code for better readability\e[25X\e[33m\e[25C│\e[K\r\e[m\n   \e[33m│   \e[m- No functional changes made\e[37X\e[33m\e[37C│\e[K\r\e[m\n   \e[33m│                                                                    │\e[K\r\e[m\n\e[33m   └────────────────────────────────────────────────────────────────────┘\r\e[m\n\n\e[32mDetected multiple commits, splitting automatically...\r"
+  - delay: 7
+    content: "\e[m\n"
+  - delay: 111
+    content: "\n\e[32m staged 3 files.\r\e[m\n\e[32mfound 3 commit messages.\r\e[m\n\n\e[36m Commiting [bin/setup.js]: chore: add a blank line for better readability in setup.js\r"
+  - delay: 14
+    content: "\e[m\n"
+  - delay: 472
+    content: "[main 3231238] chore: add a blank line for better readability in setup.js\r\n 1 file changed, 1 insertion(+)\r\n"
+  - delay: 210
+    content: "\n\e[32m\e[1mAll commits completed successfully!\e[m\e[K\r\n\n\e[36m Commiting [src/ai.js]: fix: remove unnecessary newline in genAIMessage function\r"
+  - delay: 23
+    content: "\e[m\n"
+  - delay: 403
+    content: "[main 4446b65] fix: remove unnecessary newline in genAIMessage function\r\n 1 file changed, 1 deletion(-)"
+  - delay: 11
+    content: "\r\n"
+  - delay: 100
+    content: "\n\e[32m\e[1mAll commits completed successfully!\e[m\e[K\r\n\n\e[36m Commiting [src/git.js]: fix: remove unnecessary blank line in git.js file\r"
+  - delay: 9
+    content: "\e[m\n"
+  - delay: 403
+    content: "[main 9163fb1] fix: remove unnecessary blank line in git.js file\r\n 1 file changed, 1 deletion(-)"
+  - delay: 16
+    content: "\r\n\n\e[32m\e[1mAll commits completed successfully!\e[m\e[K\r\n\n\e[32m\e[1m✅ Commit(s) created successfully!\e[m\e[K\r\n"
+  - delay: 9
+    content: "\e[?25l\n\e[25;1H\e[?25h"
+  - delay: 62
+    content: 'PS F:\.Documents\gloup\CommitCraft> '
+  - delay: 2654
+    content: "\e[?25l"
+  - delay: 20
+    content: "\e[93me\e[?25h"
+  - delay: 163
+    content: "\e[m\e[?25l"
+  - delay: 23
+    content: "\e[93m\bex\e[?25h"
+  - delay: 105
+    content: "\e[m\e[?25l"
+  - delay: 19
+    content: "\e[93m\e[25;37Hexi\e[?25h"
+  - delay: 85
+    content: "\e[m\e[?25l"
+  - delay: 9
+    content: "\e[92m\e[25;37Hexit\e[?25h"
+  - delay: 983
+    content: "\e[m"
+  - delay: 21
+    content: "\r\n"
