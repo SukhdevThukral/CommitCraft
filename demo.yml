@@ -18,12 +18,12 @@ config:
   # Explicitly set the number of columns
   # or use `auto` to take the current
   # number of columns of your shell
-  cols: 238
+  cols: 100
   
   # Explicitly set the number of rows
   # or use `auto` to take the current
   # number of rows of your shell
-  rows: 26
+  rows: 28
   
   # Amount of times to repeat GIF
   # If value is -1, play once
@@ -50,7 +50,7 @@ config:
   # Don't forget to add a backgroundColor style with a null as type
   frameBox:
     type: floating
-    title: Terminalizer
+    title: CommitCraft Demo
     style:
       border: 0px black solid
       # boxShadow: none
