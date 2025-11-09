@@ -25,8 +25,8 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 - Easy one-command setup and use
 
 ## ⭐ Support CommitCraft :3
+If this tool saved you time (or your sanity), please 🌟 the repo it keeps me going :p 
 
-If you liked this tool and wanna see more actual features to come like AI powered commits, please **give it a star!** Your support motivates me to keep improving it :D
 ## Installation
 
 1. Install the package
