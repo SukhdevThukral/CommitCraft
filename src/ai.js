@@ -4,7 +4,6 @@ export async function genAIMessage(diff){
      if (!diff || !diff.trim()) {
         return "chore: update files";
     }
-    //test8
 
     if (!OPENROUTER_API_KEY) {
         throw new Error("missing api key in env variables.");
@@ -21,7 +20,7 @@ export async function genAIMessage(diff){
         model: "gpt-4o-mini",
         messages: [{
             role: "user",
-            //shit arch, had to ai gen cause i gave up fuckass ai gave up too sheesh testing testing
+            //shit arch, had to ai gen cause i gave up
         content: `
 You are a professional software engineer.
 
