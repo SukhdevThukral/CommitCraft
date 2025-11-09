@@ -6,6 +6,7 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
+
 rl.question("Enter your API Key: ", (key)=> {
     if (!key) {
       console.log("No key entered. Setup aborted.");
