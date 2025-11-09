@@ -94,5 +94,3 @@ rl.question(chalk.yellow("⌨️ Press enter to accept:\n"), (answer)=> {
     // }
     rl.close();
 });
-
-// testing with my own repo ;(
