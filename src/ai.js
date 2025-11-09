@@ -9,7 +9,6 @@ export async function genAIMessage(diff){
         throw new Error("missing api key in env variables.");
 
     }
-//test7
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
