@@ -39,7 +39,12 @@ export function multiCommit(aiOutput) {
             execSync(`git restore --staged .`);
             execSync(`git add "${fileToCommit}"`);
             
-            execSync(`git commit --file=- -- "${fileToCommit}"`, { input: msg, stdio: "inherit" });
+            execSync(`git commit --file - -- "${fileToCommit}"`, {
+                input: msg,
+                stdio: ["pipe", "inherit", "inherit"], // pipe stdin, inherit stdout/stderr
+            });
+
+
 
             const remainingFiles = stagedFiles.slice(i + 1);
             if (remainingFiles.length > 0){
