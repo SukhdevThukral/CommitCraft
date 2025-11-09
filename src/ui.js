@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import ora from "ora";
-import stripAnsi from 'strip-ansi'; // will remove all the ansi codes tht persist in my commit msgs rn
 import boxen from "boxen";
 
 export function showFileBox(stagedFiles){
