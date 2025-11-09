@@ -11,11 +11,9 @@ Quit writing boring and useless commit messages - generate clean, meaningful com
 ![Last Commit](https://img.shields.io/github/last-commit/SukhdevThukral/CommitCraft)
 
 
-
 ## Introduction
 
 We all hate writing commit messages like:
-
 
 - "fix"
 - "final final fix"
@@ -25,50 +23,42 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 
 ## Features
 
-- Reads your **staged files** in your repository
-- Suggests **meaningful and relevant commit messages** using a simple rule based system (for now ;( )
-- Lets you **accept or edit** the suggested message
-- Easy to install and run.
-
+- Reads your **staged files** from Git  
+- Generates **AI-powered commit messages** using your OpenRouter key  
+- Automatically commits each file with a relevant message  
+- Easy one-command setup and use
 
 ## ⭐ Support CommitCraft :3
+If this tool saved you time (or your sanity), please 🌟 the repo it keeps me going :p 
 
-If you liked this tool and wanna see more actual features to come like AI powered commits, please **give it a star!** Your support motivates me to keep improving it :D
 ## Installation
 
-1. Clone this repo
+1. Install the package
 
 ``` bash
-git clone https://github.com/SukhdevThukral/CommitCraft.git
-cd CommitCraft
+npm install -g commitcraft
 ```
 
-2. Stage your files
+2. Then set your API key (i got myself one from OpenRouter.ai)
 
 ``` bash
+npx commitcraft-setup
+```
+
+## Usage
+3. Stage your files:
+
+```bash
 git add .
 ```
-
-3. Run CommitCraft (make sure you have node and npm installed)
-
+3. Use the AI-powered version!! (--ai or dont use a flag at all for rule based version)
 ``` bash
-node index.js
+commitcraft --ai
 ```
 
-4. Accept or edit the suggested commit message and press Enter
+4. Accept the suggested commit message by pressing Enter
 
-
-## How it works
-1. Reads your staged files using `git diff --staged --name-status`
-2. Generates simple commit message based on few rules;
-    - Added files → `feat: add <file>`
-   - Modified files → `fix: update <file>`
-   - Deleted files → `chore: remove <file>`
-   - Docs → `docs: update <file>`
-   - Tests → `test: update <file>`
-3. Prompts user to accept or edit the message
 
 ## Roadmap
-- [ ] Add AI-powered commit suggestions
-- [ ] Git hook integration for automatic suggestions
-- [ ] Configurable commit styles
+- [x] Add AI-powered commit suggestions
+- [ ] Git hook integration
