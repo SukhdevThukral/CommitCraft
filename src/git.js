@@ -21,7 +21,6 @@ export function getStagedFiles(){
 }
 
 // to get diff code
-
 export function getDiff(file){
     try{
         if (file){
