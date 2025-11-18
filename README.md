@@ -36,7 +36,7 @@ If this tool saved you time (or your sanity), please 🌟 the repo it keeps me g
 1. Install the package
 
 ``` bash
-npm install -g commitcraft
+npm install -g commitcraft-ai
 ```
 
 2. Then set your API key (i got myself one from OpenRouter.ai)
