@@ -16,7 +16,6 @@ import { genAIMessage } from "./src/ai.js";
 import { multiCommit } from "./src/gitActions.js";
 import stripAnsi from 'strip-ansi'; // will remove all the ansi codes tht persist in my commit msgs rn
 
-
 //take cli args
 const args = process.argv.slice(2);
 const useAI = args.includes("--ai"); //ai flag
