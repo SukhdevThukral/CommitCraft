@@ -6,6 +6,8 @@ import { genMessage } from "./src/messages.js";
 import { showFileBox } from "./src/ui.js";
 import { showMsgBox } from "./src/ui.js";
 import { finalBox } from "./src/ui.js";
+import sendTelemetry from './src/telemetry.js';
+sendTelemetry();
 import { spinner } from "./src/ui.js";
 import { execSync } from "child_process";
 import chalk from "chalk";
