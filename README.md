@@ -1,6 +1,7 @@
 # CommitCraft - AI commit generator
 
 AI-based commit generator that turns your staged diff into clean, conventional, and detailed commits in an instant.
+
 ![Demo](demo.gif)
 
 
@@ -27,11 +28,13 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 - Generates **AI-powered commit messages** using your OpenRouter key  
 - Automatically commits each file with a relevant message  
 - Easy one-command setup and use
-  #Before:
-  <img width="675" height="468" alt="image" src="https://github.com/user-attachments/assets/cedee043-5018-45ae-9bde-fae7c9dee4f7" />
+  
+## Before:
+<img width="675" height="468" alt="image" src="https://github.com/user-attachments/assets/cedee043-5018-45ae-9bde-fae7c9dee4f7" />
 
-  #After:
-  <img width="679" height="498" alt="image" src="https://github.com/user-attachments/assets/15020eba-bd86-45c2-b71d-f66dd1ec4e58" />
+## After:
+
+<img width="679" height="498" alt="image" src="https://github.com/user-attachments/assets/15020eba-bd86-45c2-b71d-f66dd1ec4e58" />
 
 
 
