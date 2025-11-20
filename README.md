@@ -25,9 +25,11 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 ## Features
 
 - Reads your **staged files** from Git  
-- Generates **AI-powered commit messages** using your OpenRouter key  
-- Automatically commits each file with a relevant message  
-- Easy one-command setup and use
+- **AI-powered commit messages** using your OpenRouter key  
+- commits each file with a relevant message
+- conventional commits format
+- Easy setup and use
+- Works in any repo
   
 ## Before:
 <img width="675" height="468" alt="image" src="https://github.com/user-attachments/assets/cedee043-5018-45ae-9bde-fae7c9dee4f7" />
@@ -35,7 +37,6 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 ## After:
 
 <img width="679" height="498" alt="image" src="https://github.com/user-attachments/assets/15020eba-bd86-45c2-b71d-f66dd1ec4e58" />
-
 
 
 ## ⭐ Support CommitCraft :3
