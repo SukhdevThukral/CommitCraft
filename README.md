@@ -30,17 +30,6 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 - conventional commits format
 - Easy setup and use
 - Works in any repo
-  
-## Before:
-<img width="675" height="468" alt="image" src="https://github.com/user-attachments/assets/cedee043-5018-45ae-9bde-fae7c9dee4f7" />
-
-## After:
-
-<img width="679" height="498" alt="image" src="https://github.com/user-attachments/assets/15020eba-bd86-45c2-b71d-f66dd1ec4e58" />
-
-
-## ⭐ Support CommitCraft :3
-If this tool saved you time (or your sanity), please 🌟 the repo it keeps me going :p 
 
 ## Installation
 
@@ -68,8 +57,26 @@ commitcraft --ai
 ```
 
 4. Accept the suggested commit message by pressing Enter
+  
+## Before:
+<img width="675" height="468" alt="image" src="https://github.com/user-attachments/assets/cedee043-5018-45ae-9bde-fae7c9dee4f7" />
 
+## After:
+<img width="679" height="498" alt="image" src="https://github.com/user-attachments/assets/15020eba-bd86-45c2-b71d-f66dd1ec4e58" />
 
 ## Roadmap
 - [x] Add AI-powered commit suggestions
 - [ ] Git hook integration
+
+## ⭐ Support CommitCraft
+If this tool saved you time (or your sanity), a star on the repository is appreciated- it helps others discover the project and supports future development
+
+##  🤝 Contributing
+If you’d like to report a bug, request a feature, or open a PR, please create an issue first so we can discuss the approach.
+
+## License
+MIT License
+
+Copyright (c) 2025 Sukhdev Thukral
+
+See the LICENSE file for details.
