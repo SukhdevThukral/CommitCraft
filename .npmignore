@@ -1,0 +1,29 @@
+# Exclude git stuff
+.git
+.gitignore
+
+# Node
+node_modules
+npm-debug.log
+yarn.lock
+pnpm-lock.yaml
+
+# Env / keys
+.env
+.env.local
+.env.*.local
+
+# Build / cache
+dist
+.DS_Store
+
+# Tests
+__tests__
+coverage
+
+# Editor / IDE
+.vscode
+.idea
+
+# OS
+Thumbs.db
