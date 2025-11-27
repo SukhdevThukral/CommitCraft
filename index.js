@@ -15,6 +15,7 @@ import chalk from "chalk";
 import readline from "readline";
 import { genAIMessage } from "./src/ai.js";
 import { multiCommit } from "./src/gitActions.js";
+import { runDoctor } from './src/doctor.js';
 import stripAnsi from 'strip-ansi'; // will remove all the ansi codes tht persist in my commit msgs rn
 
 //take cli args
@@ -24,6 +25,12 @@ const useAI = args.includes("--ai"); //ai flag
 //help checking
 if(args.includes("help") || args.includes("--help")){
     showHelp();
+    process.exit(0);
+}
+
+//doctor checking
+if(args.includes("doctor") || args.includes("--doctor")){
+    runDoctor();
     process.exit(0);
 }
 
