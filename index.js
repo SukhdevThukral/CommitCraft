@@ -9,6 +9,7 @@ import { finalBox } from "./src/ui.js";
 import sendTelemetry from './src/telemetry.js';
 sendTelemetry();
 import { spinner } from "./src/ui.js";
+import { showHelp } from "./src/cli-help.js"
 import { execSync } from "child_process";
 import chalk from "chalk";
 import readline from "readline";
@@ -19,6 +20,12 @@ import stripAnsi from 'strip-ansi'; // will remove all the ansi codes tht persis
 //take cli args
 const args = process.argv.slice(2);
 const useAI = args.includes("--ai"); //ai flag
+
+//help checking
+if(args.includes("help") || args.includes("--help")){
+    showHelp();
+    process.exit(0);
+}
 
 //ora spinner cool shit
 const spin = spinner("Analysing staged files.....").start();
