@@ -1,8 +1,9 @@
 # CommitCraft - AI commit generator
 
+AI-based commit generator that turns your staged diff into clean, conventional, and detailed commits in an instant.
+
 ![Demo](demo.gif)
 
-Quit writing boring and useless commit messages - generate clean, meaningful commits automatically
 
 ![GitHub stars](https://img.shields.io/github/stars/SukhdevThukral/CommitCraft?style=social)
 ![Node.js](https://img.shields.io/badge/node-%3E%3D14-brightgreen)
@@ -24,12 +25,11 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 ## Features
 
 - Reads your **staged files** from Git  
-- Generates **AI-powered commit messages** using your OpenRouter key  
-- Automatically commits each file with a relevant message  
-- Easy one-command setup and use
-
-## ⭐ Support CommitCraft :3
-If this tool saved you time (or your sanity), please 🌟 the repo it keeps me going :p 
+- **AI-powered commit messages** using your OpenRouter key  
+- commits each file with a relevant message
+- conventional commits format
+- Easy setup and use
+- Works in any repo
 
 ## Installation
 
@@ -57,8 +57,26 @@ commitcraft --ai
 ```
 
 4. Accept the suggested commit message by pressing Enter
+  
+## Before:
+<img width="675" height="468" alt="image" src="https://github.com/user-attachments/assets/cedee043-5018-45ae-9bde-fae7c9dee4f7" />
 
+## After:
+<img width="679" height="498" alt="image" src="https://github.com/user-attachments/assets/15020eba-bd86-45c2-b71d-f66dd1ec4e58" />
 
 ## Roadmap
 - [x] Add AI-powered commit suggestions
 - [ ] Git hook integration
+
+## ⭐ Support CommitCraft
+If this tool saved you time (or your sanity), a star on the repository is appreciated- it helps others discover the project and supports future development
+
+##  🤝 Contributing
+If you’d like to report a bug, request a feature, or open a PR, please create an issue first so we can discuss the approach.
+
+## License
+MIT License
+
+Copyright (c) 2025 Sukhdev Thukral
+
+See the LICENSE file for details.
