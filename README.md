@@ -42,7 +42,7 @@ npm install -g commitcraft-ai
 2. Then set your API key (i got myself one from OpenRouter.ai)
 
 ``` bash
-npx commitcraft-setup
+commitcraft-setup
 ```
 
 ## Usage
