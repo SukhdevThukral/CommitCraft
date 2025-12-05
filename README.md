@@ -24,6 +24,7 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 
 ## Features
 
+- **Auto stage + commit + push (one command workflow) - ```commitcraft push --ai```**
 - Reads your **staged files** from Git  
 - **AI-powered commit messages** using your OpenRouter key  
 - commits each file with a relevant message
