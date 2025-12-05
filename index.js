@@ -36,50 +36,40 @@ if(args.includes("doctor") || args.includes("--doctor")){
 
 // ---------- auto commit + push feature => better dev worflow :3 --------------------------------------------
 if (args[0] == "push"){
-    console.log(chalk.blue("Running auto commti & push workflow...\n"));
+    console.log(chalk.blue("\n [CommitCraft] Push Mode \n"));
 
     //stage everything
     try{
-        execSync("git add .", {stdio:"inherit"});
-    } catch(e){
-        console.log(chalk.red("[ERROR] Failed to stage files"));
+        console.log(chalk.white("📄 Staging changes..."));
+        execSync("git add .", {stdio:"ignore"});
+
+        const diff = getDiff();
+        let msg = useAI ? await genAIMessage(diff) : genMessage(getStagedFiles());
+
+        console.log(chalk.white("\\n Commit message suggestion: "));
+        console.log(chalk.green(`-> ${msg}\n`));
+        
+        const rlPush = readline.createInterface({input: process.stdin, output: process.stdout});
+        rlPush.question(chalk.yellow("Press Enter to accept / type to edit: "), (answer) => {
+            const final = stripAnsi(answer.trim() || msg);
+
+            console.log(chalk.white("💾 Committing..."));
+            execSync(`git commit -m "${final.replace(/"/g,'\\"')}"`, {stdio: "ignore"});
+
+            console.log(chalk.white("⬆️ Pushing to remote..."));
+            execSync("git push", {stdio:"inherit"});
+
+            console.log(chalk.bold.green("\n✨ Push Complete!\n "));
+
+            rlPush.close();
+            process.exit(0)
+        });
+
+
+    } catch(err){
+        console.log(chalk.red("[ERROR] ❌ Commit/push failed."));
         process.exit(1);
     }
-
-    const diff = getDiff();
-    let msg;
-
-    if (useAI){
-        msg = await genAIMessage(diff);
-    } else {
-        msg = genMessage(getStagedFiles());
-    }
-
-    console.log(chalk.cyan("\n Suggested commit message: \n"));
-    console.log(chalk.bold(`>> ${msg}\n`));
-
-    const rlPush = readline.createInterface({input: process.stdin, output: process.stdout});
-
-    rlPush.question(chalk.yellow("Press enter to accept or type custom message:\n"), (answer) => {
-        const finalMsg = stripAnsi(answer.trim() || msg);
-
-        if (!finalMsg) {
-            console.log(chalk.red("No commit message generated."));
-            rlPush.close()
-            process.exit(1);
-        }
-
-        try{
-            execSync(`git commit -m "${finalMsg.replace(/"/g,'\\"')}"`, { stdio: "inherit"});
-            execSync(`git push`, {stdio: "inherit"});
-            console.log(chalk.green.bold("\n Push complete!"));
-        } catch (err) {
-            console.log(chalk.red("Commit/push failed"));
-        }
-
-        rlPush.close()
-        process.exit(0);
-    });
 }
 // -----------------------------------------------------------------------------------------------------
 
