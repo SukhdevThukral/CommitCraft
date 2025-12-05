@@ -10,7 +10,7 @@ import sendTelemetry from './src/telemetry.js';
 sendTelemetry();
 import { spinner } from "./src/ui.js";
 import { showHelp } from "./src/cli-help.js"
-import { execSync } from "child_process";
+import { exec, execSync } from "child_process";
 import chalk from "chalk";
 import readline from "readline";
 import { genAIMessage } from "./src/ai.js";
@@ -33,6 +33,55 @@ if(args.includes("doctor") || args.includes("--doctor")){
     runDoctor();
     process.exit(0);
 }
+
+// ---------- auto commit + push feature => better dev worflow :3 --------------------------------------------
+if (args[0] == "push"){
+    console.log(chalk.blue("Running auto commti & push workflow...\n"));
+
+    //stage everything
+    try{
+        execSync("git add .", {stdio:"inherit"});
+    } catch(e){
+        console.log(chalk.red("[ERROR] Failed to stage files"));
+        process.exit(1);
+    }
+
+    const diff = getDiff();
+    let msg;
+
+    if (useAI){
+        msg = await genAIMessage(diff);
+    } else {
+        msg = genMessage(getStagedFiles());
+    }
+
+    console.log(chalk.cyan("\n Suggested commit message: \n"));
+    console.log(chalk.bold(`>> ${msg}\n`));
+
+    const rlPush = readline.createInterface({input: process.stdin, output: process.stdout});
+
+    rlPush.question(chalk.yellow("Press enter to accept or type custom message:\n"), (answer) => {
+        const finalMsg = stripAnsi(answer.trim() || msg);
+
+        if (!finalMsg) {
+            console.log(chalk.red("No commit message generated."));
+            rlPush.close()
+            process.exit(1);
+        }
+
+        try{
+            execSync(`git commit -m "${finalMsg.replace(/"/g,'\\"')}"`, { stdio: "inherit"});
+            execSync(`git push`, {stdio: "inherit"});
+            console.log(chalk.green.bold("\n Push complete!"));
+        } catch (err) {
+            console.log(chalk.red("Commit/push failed"));
+        }
+
+        rlPush.close()
+        process.exit(0);
+    });
+}
+// -----------------------------------------------------------------------------------------------------
 
 //ora spinner cool shit
 const spin = spinner("Analysing staged files.....").start();
