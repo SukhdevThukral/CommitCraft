@@ -9,9 +9,11 @@ import { finalBox } from "./src/ui.js";
 import sendTelemetry from './src/telemetry.js';
 sendTelemetry();
 import { spinner } from "./src/ui.js";
+import { undoCommit } from './src/undo.js';
 import { showHelp } from "./src/cli-help.js"
 import { exec, execSync } from "child_process";
 import chalk from "chalk";
+import { generatePR } from './src/pr.js';
 import readline from "readline";
 import { genAIMessage } from "./src/ai.js";
 import { multiCommit } from "./src/gitActions.js";
@@ -31,6 +33,16 @@ if(args.includes("help") || args.includes("--help")){
 //doctor checking
 if(args.includes("doctor") || args.includes("--doctor")){
     runDoctor();
+    process.exit(0);
+}
+
+if (args.includes("undo") || args.includes("--undo")){
+    undoCommit();
+    process.exit(0)
+}
+
+if (args.includes("pr") || args.includes("--pr")){
+    generatePR();
     process.exit(0);
 }
 
