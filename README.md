@@ -25,6 +25,8 @@ CommitCraft is capable of generating **clean, readable, meaningful commit messag
 ## Features
 
 - **Auto stage + commit + push (one command workflow) - ```commitcraft push --ai```**
+- **PR message generator - ```commitcraft pr```** (creates polished Pull Request descriptions from recent commits)
+- **Undo last commit- ```commitcraft undo```** (reverts to previous commit safely)
 - Reads your **staged files** from Git  
 - **AI-powered commit messages** using your OpenRouter key  
 - commits each file with a relevant message
@@ -68,6 +70,9 @@ commitcraft --ai
 ## Roadmap
 - [x] Add AI-powered commit suggestions
 - [ ] Git hook integration
+- [ ] PR auto-creation to GitHub via API
+- [ ] Interactive commit message refinement mode
+
 
 ## ⭐ Support CommitCraft
 If this tool saved you time (or your sanity), a star on the repository is appreciated- it helps others discover the project and supports future development
