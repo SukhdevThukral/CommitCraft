@@ -9,15 +9,16 @@ export async function genAIMessage(diff){
 
     }
     
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${OPENROUTER_API_KEY}`;
+    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent";
 
     const response = await fetch(url, {
     method: "POST",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "x-goog-api-key" : OPENROUTER_API_KEY
     },
     body: JSON.stringify({
-            contentS: [{
+            contents: [{
                 parts: [{
                     text: `
         You are a professional software engineer.
@@ -45,9 +46,15 @@ export async function genAIMessage(diff){
 
     const data = await response.json();
 
-    if (!data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text){
+    if (data.error){
+        throw new Error(`Gemini Error (${data.error.code}): ${data.error.message}`);
+    }
+
+    const commitMessage = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!commitMessage){
         throw new Error("No response from Gemini :("+ JSON.stringify(data,null,2));
     }
 
-    return data.candidates[0].content.parts[0].text.trim();
+    return commitMessage.trim();
 }
