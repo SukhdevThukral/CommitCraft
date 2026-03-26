@@ -20,7 +20,7 @@ We all hate writing commit messages like:
 - "final final fix"
 - "update file"
 
-CommitCraft is capable of generating **clean, readable, meaningful commit messages automatically** based on your staged changes
+this is capable of generating **clean, readable, meaningful commit messages automatically** based on your changes
 
 ## Features
 
@@ -49,17 +49,13 @@ commitcraft-setup
 ```
 
 ## Usage
-3. Stage your files:
+3. START USING!!!:
 
 ```bash
-git add .
-```
-3. Use the AI-powered version!! (--ai or dont use a flag at all for rule based version)
-``` bash
-commitcraft --ai
+commitcraft push --ai
 ```
 
-4. Accept the suggested commit message by pressing Enter
+4. BOOM NOW JUST CLICK ENTER
   
 ## Before:
 <img width="675" height="468" alt="image" src="https://github.com/user-attachments/assets/cedee043-5018-45ae-9bde-fae7c9dee4f7" />
@@ -70,12 +66,12 @@ commitcraft --ai
 ## Roadmap
 - [x] Add AI-powered commit suggestions
 - [ ] Git hook integration
-- [ ] PR auto-creation to GitHub via API
+- [ ] SINGLE CLICK WORFLOW
 - [ ] Interactive commit message refinement mode
 
 
 ## ⭐ Support CommitCraft
-If this tool saved you time (or your sanity), a star on the repository is appreciated- it helps others discover the project and supports future development
+if this tool saved you time (or your sanity at all), a star on the repository is appreciated- it helps others discover the project :3
 
 ##  🤝 Contributing
 If you’d like to report a bug, request a feature, or open a PR, please create an issue first so we can discuss the approach.
