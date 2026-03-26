@@ -5,8 +5,8 @@
   "main": "index.js",
   "description": "tool tht suggests and generates better git commit messages",
   "bin": {
-    "commitcraft": "./index.js",
-    "commitcraft-setup": "./bin/setup.js"
+    "commitcraft": "index.js",
+    "commitcraft-setup": "bin/setup.js"
   },
   "scripts": {
     "postinstall": "node ./bin/postinstall.js",
