@@ -42,7 +42,7 @@ this is capable of generating **clean, readable, meaningful commit messages auto
 npm install -g commitcraft-ai
 ```
 
-2. Then set your API key (i got myself one from OpenRouter.ai)
+2. Then set your API key (gemini)
 
 ``` bash
 commitcraft-setup
