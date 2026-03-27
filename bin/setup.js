@@ -21,7 +21,7 @@ function ask(question){
   if (fs.existsSync(".env")){
     console.log("Local .env detected - configuring there.");
 
-    const key = await ask("Enter your API key: ");
+    const key = await ask("Enter your (GEMINI)API key: ");
 
     if(!key){
       console.log("No key entered. Setup aborted.");
