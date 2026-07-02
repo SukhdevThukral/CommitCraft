@@ -4,7 +4,7 @@ CommitCraft - A lightweight conventional commit assistant
 
 
 Usage:
-    commitcraft [options]
+    commitcraft [options]s
     
 Options:
    1. --ai              Generate commit messages using AI

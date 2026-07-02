@@ -63,23 +63,29 @@ if (args[0] == "push"){
         
         const rlPush = readline.createInterface({input: process.stdin, output: process.stdout});
         rlPush.question(chalk.yellow("Press Enter to accept / type to edit: "), (answer) => {
-            const final = stripAnsi(answer.trim() || msg);
+            try{
+                const final = stripAnsi(answer.trim() || msg);
 
-            console.log(chalk.white("💾 Committing..."));
-            execSync(`git commit -m "${final.replace(/"/g,'\\"')}"`, {stdio: "ignore"});
+                console.log(chalk.white("💾 Committing..."));
+                execSync(`git commit -m "${final.replace(/"/g,'\\"')}"`, {stdio: "ignore"});
 
-            console.log(chalk.white("⬆️ Pushing to remote..."));
-            execSync("git push", {stdio:"inherit"});
+                console.log(chalk.white("⬆️ Pushing to remote..."));
+                execSync("git push", {stdio:"inherit"});
 
-            console.log(chalk.bold.green("\n✨ Push Complete!\n "));
-
-            rlPush.close();
-            process.exit(0)
+                console.log(chalk.bold.green("\n✨ Push Complete!\n "));
+            } catch (err){
+                console.log(chalk.red("[ERROR] ❌ Commit/push failed."));
+                console.log(chalk.red(err?.message || err));
+            } finally {
+                rlPush.close();
+                process.exit(0)
+            }
         });
 
 
     } catch(err){
-        console.log(chalk.red("[ERROR] ❌ Commit/push failed."));
+        console.log(chalk.red("[ERROR] ❌ Staging or AI generation failed."));
+        console.log(chalk.red(err?.message || err));
         process.exit(1);
     }
 }
