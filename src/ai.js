@@ -9,7 +9,7 @@ export async function genAIMessage(diff){
 
     }
     
-    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent";
+    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.1-flash-lite:generateContent";
 
     const response = await fetch(url, {
     method: "POST",
