@@ -13,7 +13,6 @@ export async function generatePR() {
         Commits:
         ${commits}
 
-
         Format:
         ## Title
         ### Summary
