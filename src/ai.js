@@ -11,8 +11,9 @@ const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 // ":free" model is retired. Override with OPENROUTER_MODEL if you want a fixed one.
 const MODEL = process.env.OPENROUTER_MODEL || "openrouter/free";
 
-const MAX_ATTEMPTS = 4;
-const REQUEST_TIMEOUT_MS = 60_000;
+const MAX_ATTEMPTS = 6;
+const REQUEST_TIMEOUT_MS = Number(process.env.OPENROUTER_TIMEOUT_MS) || 20_000; // fail fast, then retry
+const DEBUG = Boolean(process.env.OPENROUTER_DEBUG);
 const MAX_DIFF_LINES = 3000;
 const MAX_DIFF_CHARS = 12_000; // free models often have small effective context
 
@@ -47,6 +48,7 @@ export async function genAIMessage(diff) {
 }
 
 async function requestCommitMessage(prompt) {
+    const started = Date.now();
     let response;
     try {
         response = await fetch(API_URL, {
@@ -107,6 +109,18 @@ async function requestCommitMessage(prompt) {
     const content = data.choices?.[0]?.message?.content;
     const commitMessage = formatCommitMessage(sanitizeMessage(content));
 
+    if (commitMessage && !looksLikeCommit(commitMessage)) {
+        // The router can pick odd models (e.g. safety classifiers that answer
+        // "User Safety: safe"). Reject anything that isn't a real commit message.
+        const bad = commitMessage.replace(/\s+/g, " ").slice(0, 80);
+        const badErr = makeError(
+            `Model "${data.model ?? MODEL}" did not return a commit message: "${bad}"`,
+            true
+        );
+        badErr.empty = true; // retry quickly; the router will pick another model
+        throw badErr;
+    }
+
     if (!commitMessage) {
         // Some free models occasionally return an empty completion; retry.
         const reason = data.choices?.[0]?.finish_reason ?? "unknown";
@@ -118,26 +132,81 @@ async function requestCommitMessage(prompt) {
         throw emptyErr;
     }
 
+    if (DEBUG) {
+        console.error(`[openrouter] ${data.model ?? MODEL} answered in ${((Date.now() - started) / 1000).toFixed(1)}s`);
+    }
+
     return commitMessage;
 }
 
-function buildPrompt(cleanedDiff) {
-    return `You are a professional software engineer.
+function buildPrompt(cleanedDiff, files) {
+    const fileList = files.length ? files.map((f) => `- ${f}`).join("\n") : "- (unknown)";
 
-Here are the staged changes in a git repository:
+    return `You are a professional software engineer writing a git commit message.
 
+Changed files:
+${fileList}
+
+Staged diff (lines starting with + were added, - were removed):
 ${cleanedDiff}
 
-Generate a Git commit message based only on these changes.
+Write ONE commit message in EXACTLY this format:
+
+<type>: <short summary of the whole commit>
+
+- <what changed in the first file or area>
+- <what changed in the next file or area>
 
 Rules:
-- Use conventional commit prefixes: feat, fix, chore, docs, test.
-- Provide a concise 1-line header (50-72 characters max).
-- Optionally add 2-4 bullet points for multiple files.
-- DO NOT use Markdown, backticks, code blocks.
-- DO NOT write examples, explanations, or summaries.
-- DO NOT invent unrelated features.
-- ONLY return the commit message text, nothing else.`;
+- The FIRST line is the only header. It must start with one of: feat, fix, chore, docs, test, refactor. Keep it under 72 characters.
+- Then one blank line.
+- Then bullet lines starting with "- ". Write ONE bullet for EVERY changed file, describing specifically what changed in it (mention function, variable, or behavior names from the diff). Never start a bullet with a type prefix like "chore:".
+- Describe only what is visible in the diff. Do not invent anything.
+- No Markdown, no backticks, no code blocks, no explanations, no extra text before or after.
+
+Example of a correct answer:
+
+fix: use correct OpenRouter endpoint and add retries
+
+- src/ai.js: change API URL to /api/v1/chat/completions and retry on 429 and empty replies
+- src/telemetry.js: remove node-fetch import and use built-in fetch
+- package.json: drop node-fetch dependency and set engines to node >=18
+
+Now write the commit message for the staged diff above.`;
+}
+
+// List the changed file paths from "diff --git a/x b/x" lines.
+function extractFiles(diff) {
+    const files = [];
+    for (const line of diff.split("\n")) {
+        const match = line.match(/^diff --git a\/(.+?) b\/(.+)$/);
+        if (match && !files.includes(match[2])) files.push(match[2]);
+    }
+    return files;
+}
+
+// Some models ignore the format and return several "type: ..." lines.
+// Keep the first as the header and turn the rest into "- " bullets.
+function formatCommitMessage(text) {
+    const lines = text
+        .split("\n")
+        .map((l) => l.trim())
+        .filter(Boolean);
+    if (lines.length === 0) return "";
+
+    const prefix = /^(feat|fix|chore|docs|test|refactor|style|perf|build|ci)(\([^)]*\))?!?:\s*/i;
+    const stripBullet = (l) => l.replace(/^[-*\u2022]\s*/, "");
+
+    const header = stripBullet(lines[0]);
+    const bullets = lines
+        .slice(1)
+        .map((l) => stripBullet(l).replace(prefix, "").trim())
+        .filter(Boolean)
+        .slice(0, 12);
+
+    return bullets.length
+        ? [header, "", ...bullets.map((b) => `- ${b}`)].join("\n")
+        : header;
 }
 
 // Free models sometimes wrap output in code fences or emit <think> blocks.
@@ -188,6 +257,11 @@ function cleanGitDiff(diff) {
     }
 
     return output.join("\n");
+}
+
+function looksLikeCommit(message) {
+    const header = message.split("\n")[0];
+    return /^(feat|fix|chore|docs|test|refactor|style|perf|build|ci)(\([^)]*\))?!?:\s+\S/i.test(header);
 }
 
 function describeNetworkError(err) {
