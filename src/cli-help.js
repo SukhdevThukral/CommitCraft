@@ -2,8 +2,8 @@ export function showHelp(){
     console.log(`
 CommitCraft - A lightweight conventional commit assistant
 
-
 Usage:
+
     commitcraft [options]s
     
 Options:
