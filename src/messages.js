@@ -12,3 +12,4 @@ export function genMessage(stagedFiles){
     })
     return mesg.join("\n");
 }
+
