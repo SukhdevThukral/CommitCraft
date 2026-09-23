@@ -25,7 +25,7 @@ export async function genAIMessage(diff) {
     }
 
     const cleanedDiff = cleanGitDiff(diff);
-    const prompt = buildPrompt(cleanedDiff);
+    const prompt = buildPrompt(cleanedDiff, extractFiles(diff));
 
     let lastError;
 
@@ -68,10 +68,16 @@ async function requestCommitMessage(prompt) {
             signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         });
     } catch (err) {
-        throw makeError(`Network error: ${err.message}`, true);
+        throw makeError(describeNetworkError(err), true);
     }
 
-    const raw = await response.text();
+    let raw;
+    try {
+        raw = await response.text();
+    } catch (err) {
+        // The timeout can also fire while the body is still downloading.
+        throw makeError(describeNetworkError(err), true);
+    }
 
     let data;
     try {
@@ -99,7 +105,7 @@ async function requestCommitMessage(prompt) {
     }
 
     const content = data.choices?.[0]?.message?.content;
-    const commitMessage = sanitizeMessage(content);
+    const commitMessage = formatCommitMessage(sanitizeMessage(content));
 
     if (!commitMessage) {
         // Some free models occasionally return an empty completion; retry.
@@ -167,6 +173,7 @@ function cleanGitDiff(diff) {
             line.startsWith("diff --git") ||
             line.startsWith("---") ||
             line.startsWith("+++") ||
+            line.startsWith("@@") ||
             line.startsWith("+") ||
             line.startsWith("-")
         ) {
@@ -181,6 +188,13 @@ function cleanGitDiff(diff) {
     }
 
     return output.join("\n");
+}
+
+function describeNetworkError(err) {
+    if (err?.name === "TimeoutError" || err?.name === "AbortError") {
+        return `Request timed out after ${REQUEST_TIMEOUT_MS / 1000}s (the free model was too slow).`;
+    }
+    return `Network error: ${err?.message ?? err}`;
 }
 
 function makeError(message, retryable) {
