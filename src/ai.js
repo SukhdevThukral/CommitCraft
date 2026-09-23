@@ -8,6 +8,8 @@ export async function genAIMessage(diff){
         throw new Error("missing api key in env variables.");
 
     }
+
+    const cleanedDiff = cleanGitDiff(diff);
     
     const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent";
 
@@ -25,7 +27,7 @@ export async function genAIMessage(diff){
 
         Here are the staged changes in a git repository:
 
-        ${diff}
+        ${cleanedDiff}
 
         Generate a Git commit message **based only on these changes**.
 
@@ -57,4 +59,35 @@ export async function genAIMessage(diff){
     }
 
     return commitMessage.trim();
+}
+
+function cleanGitDiff(diff) {
+    const lines = diff.split("\n");
+    let output = [];
+    let skipFile = false;
+
+    for (const line of lines) {
+        // Skip lockfiles, build artifacts, or minified files entirely
+        if (line.startsWith("diff --git")) {
+            skipFile = line.includes("package-lock.json") || 
+                       line.includes("yarn.lock") || 
+                       line.includes("pnpm-lock.yaml") ||
+                       line.includes(".min.js");
+        }
+
+        if (skipFile) continue;
+
+        // Keep file headers and actual code changes, skip metadata lines to save space
+        if (line.startsWith("diff --git") || line.startsWith("---") || line.startsWith("+++") || line.startsWith("+") || line.startsWith("-")) {
+            output.push(line);
+        }
+
+        // Hard cap at roughly ~10,000 lines max to prevent huge token spikes
+        if (output.length > 5000) {
+            output.push("\n[Diff truncated... too many changes]");
+            break;
+        }
+    }
+
+    return output.join("\n");
 }
